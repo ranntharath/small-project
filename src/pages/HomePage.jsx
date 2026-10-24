@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 function HomePage() {
+  
+  const [isUpdate, setIsUpdate] = useState(false)
+  const [updateId, setUpdateId] = useState(null)
+
   const [open, setOpen] = useState(false)
 
   const [products, setProducts] = useState([])
@@ -34,6 +38,7 @@ function HomePage() {
       console.log(err)
     }
   }
+  
   async function handleCreate(e) {
     e.preventDefault()
 
@@ -52,14 +57,47 @@ function HomePage() {
 
   }
 
+  function openUpdate(product){
+    setProductForm(product)
+    setUpdateId(product.id)
+    setOpen(true)
+    setIsUpdate(true)
+  }
+
   useEffect(() => {
      getAllProuct()
   }, [])
 
+  function openAdd(){
+    setOpen(true)
+    setProductForm({
+      id: 0,
+      name: "",
+      price: "",
+      image: ""
+    })
+    setIsUpdate(false)
+  }
+
+  async function handleUpdate(e){
+    e.preventDefault()
+    try{
+        const res = await fetch(`http://localhost:3000/products/${updateId}`,{
+          method:"PUT",
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body : JSON.stringify(productForm)
+        })      
+
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className='px-100 '>
-      <button onClick={() => setOpen(true)} className='float-end mb-10 bg-blue-500 text-white px-5 py-2 rounded-md mt-20'>Add new Product</button>
+      <button onClick={openAdd} className='float-end mb-10 bg-blue-500 text-white px-5 py-2 rounded-md mt-20'>Add new Product</button>
 
       <table className='table-fixed text-center w-full mt-20  border-collapse border border-gray-400'>
         <thead>
@@ -82,7 +120,7 @@ function HomePage() {
                 <td className='border border-gray-300'>{pro.name}</td>
                 <td className='border border-gray-300'>{pro.price}</td>
                 <td className='border border-gray-300 space-x-3'>
-                  <button className='px-5 py-2 bg-green-500 text-white rounded-md'>Edit</button>
+                  <button onClick={()=>openUpdate(pro)} className='px-5 py-2 bg-green-500 text-white rounded-md'>Edit</button>
                   <button type='button' onClick={() => handleDelete(pro.id)} className='px-5 py-2 bg-red-500 text-white rounded-md'>Delete</button>
                 </td>
               </tr>
@@ -186,14 +224,19 @@ function HomePage() {
                 >
                   Cancel
                 </button>
-
-                <button
+                {
+                  isUpdate ?
+                  <button onClick={handleUpdate} className='rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700'>update</button>
+                  : <button
                   type="submit"
 
                   className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700"
                 >
                   Create Product
                 </button>
+                }
+
+                
               </div>
 
             </form>

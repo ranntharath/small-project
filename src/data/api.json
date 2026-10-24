@@ -21,16 +21,16 @@
   ],
   "products": [
     {
-      "id": "2",
-      "name": "Pepsi",
-      "price": 2000,
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDcTQdScclWp1lgPOuDJwG_OdaTQPmNuX4zOSKZLZV8o1BoemDPiJsUbw&s=10"
-    },
-    {
       "id": "3tvowWX0EDo",
-      "name": "ad",
+      "name": "pepsi",
       "price": "32",
       "image": "https://www.kroger.com/product/images/xlarge/front/0001200000013"
+    },
+    {
+      "id": "rdrEbtVYlDA",
+      "name": "Victoria Frye",
+      "price": "139",
+      "image": "https://www.haleranixy.tv"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
