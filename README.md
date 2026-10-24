@@ -12,5 +12,5 @@ npm run dev
 ## run backend
 ```bash
 # open new terminal
-npm json-server --watch src/data/api.json --port 3000
+npx json-server --watch src/data/api.json --port 3000
 ```
